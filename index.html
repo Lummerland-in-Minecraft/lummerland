@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lummerland Downloads - Brawl Launch Channel</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  
+  <div class="container">
+    <header class="header">
+      <h1>Lummerland Downloads</h1>
+      <p class="subtitle">Brawl Launch Channel – Lade dir die neuesten Inhalte herunter</p>
+    </header>
+    
+    <div class="downloads-grid">
+      <div class="download-card">
+        <div class="file-icon zip">🗺️</div>
+        <h3 class="file-name">Lummerland Map</h3>
+        <p class="file-description">Die komplette Minecraft-Karte von Lummerland zum Erkunden</p>
+        <a href="Lummerland Map Release v.1.zip" class="download-button" id="btn-map" download>
+          <span class="download-icon">⬇️</span> Download v.1.zip
+        </a>
+      </div>
+      <div class="download-card">
+        <div class="file-icon modpack">📦</div>
+        <h3 class="file-name">Lummerland Modpack</h3>
+        <p class="file-description">Alle benötigten Mods für das perfekte Lummerland-Erlebnis</p>
+        <a href="Lummerland Modpack 1.0.0.mrpack" class="download-button" id="btn-modpack" download>
+          <span class="download-icon">⬇️</span> Download 1.0.0.mrpack
+        </a>
+      </div>
+      <div class="download-card">
+        <div class="file-icon nbt">🚂</div>
+        <h3 class="file-name">Emma Lummerland</h3>
+        <p class="file-description">Die berühmte Lokomotive Emma als NBT-Datei</p>
+        <a href="emma_lummerland.nbt" class="download-button" id="btn-emma" download>
+          <span class="download-icon">⬇️</span> Download .nbt
+        </a>
+      </div>
+    </div>
+
+    <!-- Screenshot-Galerie -->
+    <section id="screenshot-gallery" aria-label="Screenshot-Galerie Lummerland">
+      <div class="gallery-container">
+        <button class="prev" aria-label="Vorheriges Bild">&#10094;</button>
+        <button class="next" aria-label="Nächstes Bild">&#10095;</button>
+        <figure class="slide active">
+          <img src="schloss.png" alt="Schloss von König Alfons">
+          <figcaption>
+            <h3>Schloss von König Alfons</h3>
+            <p>Das bekannte Schloss zwischen den beiden Bergspitzen – Residenz des Königs auf Lummerland.</p>
+          </figcaption>
+        </figure>
+        <figure class="slide">
+          <img src="emma.png" alt="Lokomotive Emma">
+          <figcaption>
+            <h3>Lokomotive Emma</h3>
+            <p>Lukas' Dampflok – bereit für jedes Abenteuer durch Tunnel und über Brücken!</p>
+          </figcaption>
+        </figure>
+        <figure class="slide">
+          <img src="lummerlandhbf.png" alt="Bahnhof Lummerland">
+          <figcaption>
+            <h3>Bahnhof Lummerland</h3>
+            <p>Der kleine Bahnhof – zentraler Punkt für Fahrten mit Emma über die Insel.</p>
+          </figcaption>
+        </figure>
+        <figure class="slide">
+          <img src="lummerland.png" alt="Lummerland Übersicht">
+          <figcaption>
+            <h3>Lummerland Übersicht</h3>
+            <p>Die gesamte Insel mit ihren zwei Bergen und bekannten Gebäuden im Überblick.</p>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <div class="stats-bar">
+      <p class="stats-text">Genieße dein Abenteuer in Lummerland! 🌟</p>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
