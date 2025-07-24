@@ -2,130 +2,81 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lummerland Downloads - Brawl Launch Channel</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CJRCFBT5WH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CJRCFBT5WH');
+  </script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #1e1e2f;
-      color: #eee;
-      margin: 0;
-      padding: 0 20px;
-      line-height: 1.6;
-    }
-    header {
-      text-align: center;
-      padding: 40px 20px 20px;
-      background: linear-gradient(90deg, #4a4a8f, #282858);
-      color: white;
-      border-radius: 0 0 15px 15px;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background-color: #f9f9f9;
+      color: #333;
     }
     h1 {
-      margin: 0;
-      font-size: 2.8em;
+      text-align: center;
+      margin-bottom: 2rem;
     }
-    .download-section {
-      background-color: #2c2c47;
-      max-width: 700px;
-      margin: 20px auto;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.5);
-    }
-    .download-link {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 12px 18px;
-      background-color: #4455aa;
-      color: #eee;
+    .download-button {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 1rem auto;
+      padding: 1rem;
+      font-size: 1.2rem;
+      text-align: center;
       text-decoration: none;
-      border-radius: 10px;
-      transition: background-color 0.3s ease;
-      font-weight: bold;
+      background-color: #0078d7;
+      color: white;
+      border-radius: 6px;
       cursor: pointer;
+      user-select: none;
     }
-    .download-link:hover {
-      background-color: #223377;
-    }
-    .counter {
-      margin-top: 8px;
-      font-size: 0.9em;
-      color: #bbb;
+    .download-button:hover {
+      background-color: #005ea1;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Lummerland Downloads</h1>
-    <p>Willkommen beim Brawl Launch Channel – hier kannst du alle wichtigen Dateien herunterladen.</p>
-  </header>
+  <h1>Lummerland Downloads - Brawl Launch Channel</h1>
 
-  <section class="download-section">
-    <h2>Lummerland Map Release v1</h2>
-    <a id="download-map" href="Lummerland%20Map%20Release%20v.1.zip" class="download-link" download>Lummerland Map Download</a>
-    <div class="counter">Downloads: <span id="count-map">0</span></div>
-  </section>
+  <a href="Lummerland Map Release v.1.zip" class="download-button" id="btn-map" download>
+    Lummerland Map Release v.1.zip herunterladen
+  </a>
 
-  <section class="download-section">
-    <h2>Lummerland Modpack 1.0.0</h2>
-    <a id="download-modpack" href="Lummerland%20Modpack%201.0.0.mrpack" class="download-link" download>Lummerland Modpack Download</a>
-    <div class="counter">Downloads: <span id="count-modpack">0</span></div>
-  </section>
+  <a href="Lummerland Modpack 1.0.0.mrpack" class="download-button" id="btn-modpack" download>
+    Lummerland Modpack 1.0.0.mrpack herunterladen
+  </a>
 
-  <section class="download-section">
-    <h2>Emma Lummerland NBT</h2>
-    <a id="download-emma" href="emma_lummerland.nbt" class="download-link" download>Emma NBT Download</a>
-    <div class="counter">Downloads: <span id="count-emma">0</span></div>
-  </section>
+  <a href="emma_lummerland.nbt" class="download-button" id="btn-emma" download>
+    emma_lummerland.nbt herunterladen
+  </a>
 
   <script>
-    // IDs für CountAPI (muss eindeutig sein, am besten dein Projektname)
-    const namespace = 'brawl-launch-channel';
-    
-    // Map
-    const mapKey = 'lummerland-map';
-    // Modpack
-    const modpackKey = 'lummerland-modpack';
-    // Emma
-    const emmaKey = 'emma-nbt';
-
-    // Funktion um aktuellen Zähler abzurufen
-    async function fetchCount(key, spanId) {
-      try {
-        const res = await fetch(`https://api.countapi.xyz/get/${namespace}/${key}`);
-        const data = await res.json();
-        document.getElementById(spanId).textContent = data.value;
-      } catch(e) {
-        console.log('Fehler beim Laden der Zähler', e);
-      }
+    // Funktion um Klicks als Google Analytics Event zu senden
+    function trackDownload(buttonId, label) {
+      const button = document.getElementById(buttonId);
+      button.addEventListener('click', function() {
+        gtag('event', 'download_click', {
+          'event_category': 'Downloads',
+          'event_label': label
+        });
+      });
     }
 
-    // Funktion um Zähler hochzählen
-    async function incrementCount(key, spanId) {
-      try {
-        const res = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
-        const data = await res.json();
-        document.getElementById(spanId).textContent = data.value;
-      } catch(e) {
-        console.log('Fehler beim Erhöhen der Zähler', e);
-      }
-    }
-
-    // Alle Zähler initial laden
-    fetchCount(mapKey, 'count-map');
-    fetchCount(modpackKey, 'count-modpack');
-    fetchCount(emmaKey, 'count-emma');
-
-    // EventListener für Klicks auf Download-Links, um Zähler zu erhöhen
-    document.getElementById('download-map').addEventListener('click', () => {
-      incrementCount(mapKey, 'count-map');
-    });
-    document.getElementById('download-modpack').addEventListener('click', () => {
-      incrementCount(modpackKey, 'count-modpack');
-    });
-    document.getElementById('download-emma').addEventListener('click', () => {
-      incrementCount(emmaKey, 'count-emma');
-    });
+    // Event-Listener für alle 3 Buttons
+    trackDownload('btn-map', 'Lummerland Map Release v1');
+    trackDownload('btn-modpack', 'Lummerland Modpack 1.0.0');
+    trackDownload('btn-emma', 'emma_lummerland.nbt');
   </script>
 </body>
 </html>
