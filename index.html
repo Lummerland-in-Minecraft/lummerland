@@ -11,7 +11,11 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-CJRCFBT5WH');
+    gtag('config', 'G-CJRCFBT5WH', {
+      // Bot-Traffic filtern
+      'allow_google_signals': false,
+      'allow_ad_personalization_signals': false
+    });
   </script>
   
   <style>
@@ -91,45 +95,36 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       text-decoration: none;
-      font-size: 1.8rem;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
       box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
     }
 
     .social-link:hover {
       transform: translateY(-5px) scale(1.05);
       box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+      border-color: rgba(255, 255, 255, 0.4);
     }
 
-    .youtube {
-      background: linear-gradient(45deg, #FF0000, #CC0000);
-      color: white;
+    .social-link img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      filter: brightness(1.2);
+      transition: all 0.3s ease;
     }
 
-    .tiktok {
-      background: linear-gradient(45deg, #000000, #fe2c55);
-      color: white;
-    }
-
-    .instagram {
-      background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045);
-      color: white;
-    }
-
-    .twitch {
-      background: linear-gradient(45deg, #9146FF, #6441a4);
-      color: white;
-    }
-
-    .threads {
-      background: linear-gradient(45deg, #000000, #333333);
-      color: white;
+    .social-link:hover img {
+      transform: scale(1.1);
+      filter: brightness(1.4);
     }
 
     .downloads-grid {
@@ -554,9 +549,13 @@
       }
 
       .social-link {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
+        width: 60px;
+        height: 60px;
+      }
+
+      .social-link img {
+        width: 35px;
+        height: 35px;
       }
       
       .downloads-grid {
@@ -634,9 +633,13 @@
       }
 
       .social-link {
-        width: 45px;
-        height: 45px;
-        font-size: 1.3rem;
+        width: 50px;
+        height: 50px;
+      }
+
+      .social-link img {
+        width: 30px;
+        height: 30px;
       }
       
       .downloads-grid {
@@ -666,20 +669,20 @@
     <section class="social-section">
       <h2 class="social-title">Folge mir auf Social Media! 🚀</h2>
       <div class="social-links">
-        <a href="https://www.youtube.com/channel/UClVec0Kgx-NwOlKMKZkEBRw?sub_confirmation=1" target="_blank" class="social-link youtube" title="YouTube" onclick="trackSocial('YouTube')">
-          📺
+        <a href="https://www.youtube.com/channel/UClVec0Kgx-NwOlKMKZkEBRw?sub_confirmation=1" target="_blank" class="social-link" title="YouTube" onclick="trackSocial('YouTube')">
+          <img src="icons8-youtube-48.png" alt="YouTube">
         </a>
-        <a href="https://www.tiktok.com/@brawl.launch.chan?_t=8secxyswtaj&_r=1" target="_blank" class="social-link tiktok" title="TikTok" onclick="trackSocial('TikTok')">
-          🎵
+        <a href="https://www.tiktok.com/@brawl.launch.chan?_t=8secxyswtaj&_r=1" target="_blank" class="social-link" title="TikTok" onclick="trackSocial('TikTok')">
+          <img src="icons8-tiktok-50.png" alt="TikTok">
         </a>
-        <a href="https://www.instagram.com/brawllaunchchannel/" target="_blank" class="social-link instagram" title="Instagram" onclick="trackSocial('Instagram')">
-          📷
+        <a href="https://www.instagram.com/brawllaunchchannel/" target="_blank" class="social-link" title="Instagram" onclick="trackSocial('Instagram')">
+          <img src="icons8-instagram-64.png" alt="Instagram">
         </a>
-        <a href="https://www.twitch.tv/brawllaunchchannel" target="_blank" class="social-link twitch" title="Twitch" onclick="trackSocial('Twitch')">
-          🎮
+        <a href="https://www.twitch.tv/brawllaunchchannel" target="_blank" class="social-link" title="Twitch" onclick="trackSocial('Twitch')">
+          <img src="icons8-twitch-64.png" alt="Twitch">
         </a>
-        <a href="https://www.threads.com/@brawllaunchchannel" target="_blank" class="social-link threads" title="Threads" onclick="trackSocial('Threads')">
-          🧵
+        <a href="https://discord.gg/qRQPWBdt7n" target="_blank" class="social-link" title="Discord" onclick="trackSocial('Discord')">
+          <img src="icons8-discord-logo-48.png" alt="Discord">
         </a>
       </div>
     </section>
@@ -787,14 +790,25 @@
   </div>
 
   <script>
-    // Google Analytics Download Tracking
+    // Google Analytics Download Tracking mit mehr Details
     function trackDownload(filename, filetype) {
       if (typeof gtag !== 'undefined') {
         gtag('event', 'file_download', {
           'event_category': 'Downloads',
           'event_label': filename,
+          'file_name': filename,
+          'file_extension': filetype,
           'value': 1
         });
+        
+        // Zusätzlich spezifisches Event für jeden Download-Typ
+        gtag('event', 'download_' + filename.toLowerCase(), {
+          'event_category': 'Specific_Downloads',
+          'event_label': filename + filetype,
+          'value': 1
+        });
+        
+        console.log('Download getrackt:', filename, filetype);
       }
     }
 
@@ -859,4 +873,154 @@
       const imageData = galleryData[imageIndex];
       
       modalImage.src = imageData.src;
-      modalImage.alt = imageData.
+      modalImage.alt = imageData.alt;
+      modalTitle.textContent = imageData.title;
+      modalDescription.textContent = imageData.description;
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      // Track modal open
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'image_modal_open', {
+          'event_category': 'Gallery',
+          'event_label': imageData.title,
+          'value': 1
+        });
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close modal on background click
+    document.getElementById('imageModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Close modal on ESC key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // Particle Animation
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Gallery functionality
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+    const indicators = document.querySelectorAll(".indicator");
+    const prev = document.querySelector(".prev");
+    const next = document.querySelector(".next");
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
+      });
+      indicators.forEach((indicator, i) => {
+        indicator.classList.toggle("active", i === index);
+      });
+    }
+
+    function changeSlide(direction) {
+      slideIndex = (slideIndex + direction + slides.length) % slides.length;
+      showSlide(slideIndex);
+    }
+
+    function goToSlide(index) {
+      slideIndex = index;
+      showSlide(slideIndex);
+    }
+
+    // Event listeners with Google Analytics tracking
+    prev.addEventListener("click", () => {
+      changeSlide(-1);
+      // Track gallery navigation
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'gallery_navigation', {
+          'event_category': 'Gallery',
+          'event_label': 'Previous'
+        });
+      }
+    });
+    
+    next.addEventListener("click", () => {
+      changeSlide(1);
+      // Track gallery navigation
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'gallery_navigation', {
+          'event_category': 'Gallery',
+          'event_label': 'Next'
+        });
+      }
+    });
+
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener("click", () => goToSlide(index));
+    });
+
+    // Auto-slide functionality
+    let autoSlideInterval = setInterval(() => changeSlide(1), 5000);
+
+    // Pause auto-slide on hover
+    const galleryContainer = document.querySelector('.gallery-container');
+    galleryContainer.addEventListener('mouseenter', () => {
+      clearInterval(autoSlideInterval);
+    });
+
+    galleryContainer.addEventListener('mouseleave', () => {
+      autoSlideInterval = setInterval(() => changeSlide(1), 5000);
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') changeSlide(-1);
+      if (e.key === 'ArrowRight') changeSlide(1);
+    });
+
+    // Touch/swipe support for mobile
+    let startX = 0;
+    let endX = 0;
+
+    galleryContainer.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    galleryContainer.addEventListener('touchend', (e) => {
+      endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      
+      if (Math.abs(diff) > 50) { // Minimum swipe distance
+        if (diff > 0) {
+          changeSlide(1); // Swipe left - next slide
+        } else {
+          changeSlide(-1); // Swipe right - previous slide
+        }
+      }
+    });
+
+    // Initialize
+    showSlide(slideIndex);
+    createParticles();
+  </script>
+</body>
+</html>
