@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lummerland Downloads - Brawl Launch Channel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e2f;
+      color: #eee;
+      margin: 0;
+      padding: 0 20px;
+      line-height: 1.6;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      background: linear-gradient(90deg, #4a4a8f, #282858);
+      color: white;
+      border-radius: 0 0 15px 15px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.8em;
+    }
+    .download-section {
+      background-color: #2c2c47;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    }
+    .download-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 18px;
+      background-color: #4455aa;
+      color: #eee;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .download-link:hover {
+      background-color: #223377;
+    }
+    .counter {
+      margin-top: 8px;
+      font-size: 0.9em;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lummerland Downloads</h1>
+    <p>Willkommen beim Brawl Launch Channel – hier kannst du alle wichtigen Dateien herunterladen.</p>
+  </header>
+
+  <section class="download-section">
+    <h2>Lummerland Map Release v1</h2>
+    <a id="download-map" href="Lummerland%20Map%20Release%20v.1.zip" class="download-link" download>Lummerland Map Download</a>
+    <div class="counter">Downloads: <span id="count-map">0</span></div>
+  </section>
+
+  <section class="download-section">
+    <h2>Lummerland Modpack 1.0.0</h2>
+    <a id="download-modpack" href="Lummerland%20Modpack%201.0.0.mrpack" class="download-link" download>Lummerland Modpack Download</a>
+    <div class="counter">Downloads: <span id="count-modpack">0</span></div>
+  </section>
+
+  <section class="download-section">
+    <h2>Emma Lummerland NBT</h2>
+    <a id="download-emma" href="emma_lummerland.nbt" class="download-link" download>Emma NBT Download</a>
+    <div class="counter">Downloads: <span id="count-emma">0</span></div>
+  </section>
+
+  <script>
+    // IDs für CountAPI (muss eindeutig sein, am besten dein Projektname)
+    const namespace = 'brawl-launch-channel';
+    
+    // Map
+    const mapKey = 'lummerland-map';
+    // Modpack
+    const modpackKey = 'lummerland-modpack';
+    // Emma
+    const emmaKey = 'emma-nbt';
+
+    // Funktion um aktuellen Zähler abzurufen
+    async function fetchCount(key, spanId) {
+      try {
+        const res = await fetch(`https://api.countapi.xyz/get/${namespace}/${key}`);
+        const data = await res.json();
+        document.getElementById(spanId).textContent = data.value;
+      } catch(e) {
+        console.log('Fehler beim Laden der Zähler', e);
+      }
+    }
+
+    // Funktion um Zähler hochzählen
+    async function incrementCount(key, spanId) {
+      try {
+        const res = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
+        const data = await res.json();
+        document.getElementById(spanId).textContent = data.value;
+      } catch(e) {
+        console.log('Fehler beim Erhöhen der Zähler', e);
+      }
+    }
+
+    // Alle Zähler initial laden
+    fetchCount(mapKey, 'count-map');
+    fetchCount(modpackKey, 'count-modpack');
+    fetchCount(emmaKey, 'count-emma');
+
+    // EventListener für Klicks auf Download-Links, um Zähler zu erhöhen
+    document.getElementById('download-map').addEventListener('click', () => {
+      incrementCount(mapKey, 'count-map');
+    });
+    document.getElementById('download-modpack').addEventListener('click', () => {
+      incrementCount(modpackKey, 'count-modpack');
+    });
+    document.getElementById('download-emma').addEventListener('click', () => {
+      incrementCount(emmaKey, 'count-emma');
+    });
+  </script>
+</body>
+</html>
