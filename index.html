@@ -5,13 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lummerland Downloads - Brawl Launch Channel</title>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CJRCFBT5WH"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-CJRCFBT5WH');
-  </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CJRCFBT5WH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  
+  gtag('config', 'G-CJRCFBT5WH', {
+    'page_title': 'Lummerland Downloads',
+    'page_location': window.location.href,
+    'send_page_view': true,
+    'debug_mode': true
+  });
+  
+  // Erweiterte Diagnose
+  console.log('=== GA4 DEBUG INFO ===');
+  console.log('Current URL:', window.location.href);
+  console.log('User Agent:', navigator.userAgent);
+  console.log('Cookies enabled:', navigator.cookieEnabled);
+  console.log('Do Not Track:', navigator.doNotTrack);
+  
+  // Test ob gtag lädt
+  setTimeout(function() {
+    if (typeof gtag === 'function') {
+      console.log('✅ gtag loaded successfully');
+      
+      // Sofort Test-Event senden
+      gtag('event', 'test_connection', {
+        'debug_mode': true,
+        'test_timestamp': new Date().toISOString(),
+        'page_url': window.location.href
+      });
+      console.log('📤 Test event sent to GA4');
+      
+    } else {
+      console.error('❌ gtag failed to load - check network/adblocker');
+    }
+  }, 3000);
+  
+  // Network-Requests überwachen
+  if (window.fetch) {
+    const originalFetch = window.fetch;
+    window.fetch = function(...args) {
+      if (args[0] && args[0].includes('google-analytics.com')) {
+        console.log('📡 GA4 network request:', args[0]);
+      }
+      return originalFetch.apply(this, args);
+    };
+  }
+</script>
   <style>
     * {
       margin: 0;
