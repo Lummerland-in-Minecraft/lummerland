@@ -38,7 +38,7 @@
 
     .header {
       text-align: center;
-      margin-bottom: 5rem;
+      margin-bottom: 3rem;
       position: relative;
     }
 
@@ -64,6 +64,88 @@
       opacity: 0.9;
       margin-bottom: 2rem;
       color: #ccc;
+    }
+
+    /* Social Media Styles */
+    .social-section {
+      text-align: center;
+      margin: 3rem 0 5rem;
+    }
+
+    .social-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      text-decoration: none;
+      font-size: 2rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 50%;
+      transition: transform 0.4s ease;
+      z-index: -1;
+    }
+
+    .social-link:hover::before {
+      transform: scale(1.1);
+    }
+
+    .social-link:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .youtube {
+      background: linear-gradient(45deg, #FF0000, #CC0000);
+      color: white;
+    }
+
+    .tiktok {
+      background: linear-gradient(45deg, #000000, #fe2c55);
+      color: white;
+    }
+
+    .instagram {
+      background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045);
+      color: white;
+    }
+
+    .twitch {
+      background: linear-gradient(45deg, #9146FF, #6441a4);
+      color: white;
+    }
+
+    .threads {
+      background: linear-gradient(45deg, #000000, #333333);
+      color: white;
     }
 
     .downloads-grid {
@@ -219,6 +301,7 @@
       position: relative;
       opacity: 0;
       transition: opacity 0.5s ease-in-out;
+      cursor: pointer;
     }
 
     .slide.active {
@@ -232,6 +315,11 @@
       object-fit: cover;
       object-position: center;
       display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .slide:hover img {
+      transform: scale(1.02);
     }
 
     .slide figcaption {
@@ -293,6 +381,99 @@
       background: rgba(255, 255, 255, 0.3);
       transform: translateY(-50%) scale(1.1);
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 95%;
+      max-height: 95%;
+      animation: zoomIn 0.3s ease-in-out;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-image {
+      width: 100%;
+      height: auto;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 15px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      color: white;
+      font-size: 3rem;
+      font-weight: bold;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    .modal-caption {
+      position: absolute;
+      bottom: -80px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: white;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 1.5rem;
+      border-radius: 15px;
+    }
+
+    .modal-caption h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-caption p {
+      font-size: 1rem;
+      opacity: 0.9;
     }
 
     .stats-bar {
@@ -383,6 +564,16 @@
       .subtitle {
         font-size: 1.1rem;
       }
+
+      .social-links {
+        gap: 1.5rem;
+      }
+
+      .social-link {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+      }
       
       .downloads-grid {
         grid-template-columns: 1fr;
@@ -431,6 +622,18 @@
       .next {
         right: 10px;
       }
+
+      .modal-close {
+        top: -40px;
+        font-size: 2rem;
+        width: 40px;
+        height: 40px;
+      }
+
+      .modal-caption {
+        bottom: -60px;
+        padding: 1rem;
+      }
     }
 
     @media (max-width: 480px) {
@@ -440,6 +643,16 @@
       
       h1 {
         font-size: 2rem;
+      }
+
+      .social-links {
+        gap: 1rem;
+      }
+
+      .social-link {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
       }
       
       .downloads-grid {
@@ -464,6 +677,28 @@
       <h1>Lummerland Downloads</h1>
       <p class="subtitle">Brawl Launch Channel – Lade dir die neuesten Inhalte herunter</p>
     </header>
+
+    <!-- Social Media Section -->
+    <section class="social-section">
+      <h2 class="social-title">Folge mir auf Social Media! 🚀</h2>
+      <div class="social-links">
+        <a href="https://www.youtube.com/channel/UClVec0Kgx-NwOlKMKZkEBRw?sub_confirmation=1" target="_blank" class="social-link youtube" title="YouTube" onclick="trackSocial('YouTube')">
+          📺
+        </a>
+        <a href="https://www.tiktok.com/@brawl.launch.chan?_t=8secxyswtaj&_r=1" target="_blank" class="social-link tiktok" title="TikTok" onclick="trackSocial('TikTok')">
+          🎵
+        </a>
+        <a href="https://www.instagram.com/brawllaunchchannel/" target="_blank" class="social-link instagram" title="Instagram" onclick="trackSocial('Instagram')">
+          📷
+        </a>
+        <a href="https://www.twitch.tv/brawllaunchchannel" target="_blank" class="social-link twitch" title="Twitch" onclick="trackSocial('Twitch')">
+          🎮
+        </a>
+        <a href="https://www.threads.com/@brawllaunchchannel" target="_blank" class="social-link threads" title="Threads" onclick="trackSocial('Threads')">
+          🧵
+        </a>
+      </div>
+    </section>
     
     <div class="downloads-grid">
       <div class="download-card">
@@ -497,42 +732,42 @@
       <div class="gallery-container">
         <button class="prev" aria-label="Vorheriges Bild">&#10094;</button>
         <button class="next" aria-label="Nächstes Bild">&#10095;</button>
-        <figure class="slide active">
+        <figure class="slide active" onclick="openModal(0)">
           <img src="schloss.png" alt="Schloss von König Alfons">
           <figcaption>
             <h3>Schloss von König Alfons</h3>
             <p>Das majestätische Schloss zwischen den beiden Bergspitzen – die prachtvolle Residenz des Königs auf der kleinen Insel Lummerland.</p>
           </figcaption>
         </figure>
-        <figure class="slide">
+        <figure class="slide" onclick="openModal(1)">
           <img src="emma.png" alt="Lokomotive Emma">
           <figcaption>
             <h3>Lokomotive Emma</h3>
             <p>Lukas' treue Dampflok Emma – bereit für jedes Abenteuer!</p>
           </figcaption>
         </figure>
-        <figure class="slide">
+        <figure class="slide" onclick="openModal(2)">
           <img src="lummerlandhbf.png" alt="Bahnhof Lummerland">
           <figcaption>
             <h3>Bahnhof Lummerland</h3>
             <p>Der gemütliche kleine Bahnhof – zentraler Ausgangspunkt für alle Fahrten mit Emma über die wunderschöne Insel.</p>
           </figcaption>
         </figure>
-        <figure class="slide">
+        <figure class="slide" onclick="openModal(3)">
           <img src="lummerland.png" alt="Lummerland Übersicht">
           <figcaption>
             <h3>Lummerland Übersicht</h3>
             <p>Die gesamte bezaubernde Insel mit ihren zwei charakteristischen Bergen und allen bekannten Gebäuden im Überblick.</p>
           </figcaption>
         </figure>
-        <figure class="slide">
+        <figure class="slide" onclick="openModal(4)">
           <img src="waas.png" alt="Waas Lummerland">
           <figcaption>
             <h3>Frau Waas auf Lummerland</h3>
             <p>Entdecke den Laden von Frau Waas</p>
           </figcaption>
         </figure>
-        <figure class="slide">
+        <figure class="slide" onclick="openModal(5)">
           <img src="ärmel.png" alt="Ärmel Lummerland">
           <figcaption>
             <h3>Haus von Herr Ärmel</h3>
@@ -549,6 +784,18 @@
         <div class="indicator" data-slide="5"></div>
       </div>
     </section>
+
+    <!-- Modal für vergrößerte Bilder -->
+    <div class="modal" id="imageModal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-image" id="modalImage" src="" alt="">
+        <div class="modal-caption" id="modalCaption">
+          <h3 id="modalTitle"></h3>
+          <p id="modalDescription"></p>
+        </div>
+      </div>
+    </div>
     
     <div class="stats-bar">
       <p class="stats-text">Genieße dein Abenteuer in Lummerland! 🌟 Erlebe die Magie von Jim Knopf und Lukas der Lokomotivführer!</p>
@@ -562,6 +809,17 @@
         gtag('event', 'file_download', {
           'event_category': 'Downloads',
           'event_label': filename,
+          'value': 1
+        });
+      }
+    }
+
+    // Google Analytics Social Media Tracking
+    function trackSocial(platform) {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'social_click', {
+          'event_category': 'Social Media',
+          'event_label': platform,
           'value': 1
         });
       }
@@ -582,102 +840,28 @@
       }
     }
 
-    // Gallery functionality
-    let slideIndex = 0;
-    const slides = document.querySelectorAll(".slide");
-    const indicators = document.querySelectorAll(".indicator");
-    const prev = document.querySelector(".prev");
-    const next = document.querySelector(".next");
-
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === index);
-      });
-      indicators.forEach((indicator, i) => {
-        indicator.classList.toggle("active", i === index);
-      });
-    }
-
-    function changeSlide(direction) {
-      slideIndex = (slideIndex + direction + slides.length) % slides.length;
-      showSlide(slideIndex);
-    }
-
-    function goToSlide(index) {
-      slideIndex = index;
-      showSlide(slideIndex);
-    }
-
-    // Event listeners with Google Analytics tracking
-    prev.addEventListener("click", () => {
-      changeSlide(-1);
-      // Track gallery navigation
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'gallery_navigation', {
-          'event_category': 'Gallery',
-          'event_label': 'Previous'
-        });
-      }
-    });
-    
-    next.addEventListener("click", () => {
-      changeSlide(1);
-      // Track gallery navigation
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'gallery_navigation', {
-          'event_category': 'Gallery',
-          'event_label': 'Next'
-        });
-      }
-    });
-
-    indicators.forEach((indicator, index) => {
-      indicator.addEventListener("click", () => goToSlide(index));
-    });
-
-    // Auto-slide functionality
-    let autoSlideInterval = setInterval(() => changeSlide(1), 5000);
-
-    // Pause auto-slide on hover
-    const galleryContainer = document.querySelector('.gallery-container');
-    galleryContainer.addEventListener('mouseenter', () => {
-      clearInterval(autoSlideInterval);
-    });
-
-    galleryContainer.addEventListener('mouseleave', () => {
-      autoSlideInterval = setInterval(() => changeSlide(1), 5000);
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') changeSlide(-1);
-      if (e.key === 'ArrowRight') changeSlide(1);
-    });
-
-    // Touch/swipe support for mobile
-    let startX = 0;
-    let endX = 0;
-
-    galleryContainer.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-    });
-
-    galleryContainer.addEventListener('touchend', (e) => {
-      endX = e.changedTouches[0].clientX;
-      const diff = startX - endX;
-      
-      if (Math.abs(diff) > 50) { // Minimum swipe distance
-        if (diff > 0) {
-          changeSlide(1); // Swipe left - next slide
-        } else {
-          changeSlide(-1); // Swipe right - previous slide
-        }
-      }
-    });
-
-    // Initialize
-    showSlide(slideIndex);
-    createParticles();
-  </script>
-</body>
-</html>
+    // Gallery data
+    const galleryData = [
+      {
+        src: 'schloss.png',
+        alt: 'Schloss von König Alfons',
+        title: 'Schloss von König Alfons',
+        description: 'Das majestätische Schloss zwischen den beiden Bergspitzen – die prachtvolle Residenz des Königs auf der kleinen Insel Lummerland.'
+      },
+      {
+        src: 'emma.png',
+        alt: 'Lokomotive Emma',
+        title: 'Lokomotive Emma',
+        description: 'Lukas\' treue Dampflok Emma – bereit für jedes Abenteuer!'
+      },
+      {
+        src: 'lummerlandhbf.png',
+        alt: 'Bahnhof Lummerland',
+        title: 'Bahnhof Lummerland',
+        description: 'Der gemütliche kleine Bahnhof – zentraler Ausgangspunkt für alle Fahrten mit Emma über die wunderschöne Insel.'
+      },
+      {
+        src: 'lummerland.png',
+        alt: 'Lummerland Übersicht',
+        title: 'Lummerland Übersicht',
+        description: '
