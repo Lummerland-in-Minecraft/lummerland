@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <title>Lummerland Downloads - Brawl Launch Channel</title>
-
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CJRCFBT5WH"></script>
   <script>
@@ -12,7 +11,6 @@
     gtag('js', new Date());
     gtag('config', 'G-CJRCFBT5WH');
   </script>
-
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -48,35 +46,51 @@
 </head>
 <body>
   <h1>Lummerland Downloads - Brawl Launch Channel</h1>
-
   <a href="Lummerland Map Release v.1.zip" class="download-button" id="btn-map" download>
     Lummerland Map Release v.1.zip herunterladen
   </a>
-
   <a href="Lummerland Modpack 1.0.0.mrpack" class="download-button" id="btn-modpack" download>
     Lummerland Modpack 1.0.0.mrpack herunterladen
   </a>
-
   <a href="emma_lummerland.nbt" class="download-button" id="btn-emma" download>
     emma_lummerland.nbt herunterladen
   </a>
-
   <script>
-    // Funktion um Klicks als Google Analytics Event zu senden
-    function trackDownload(buttonId, label) {
+    // Verbesserte Tracking-Funktion für GA4
+    function trackDownload(buttonId, fileName, fileType) {
       const button = document.getElementById(buttonId);
-      button.addEventListener('click', function() {
-        gtag('event', 'download_click', {
-          'event_category': 'Downloads',
-          'event_label': label
+      button.addEventListener('click', function(e) {
+        // GA4 file_download Event (empfohlener Standard)
+        gtag('event', 'file_download', {
+          'file_name': fileName,
+          'file_extension': fileType,
+          'link_url': button.href,
+          'link_text': button.textContent.trim()
         });
+        
+        // Zusätzliches custom Event für bessere Analyse
+        gtag('event', 'lummerland_download', {
+          'event_category': 'Downloads',
+          'event_label': fileName,
+          'file_type': fileType,
+          'download_source': 'lummerland_page'
+        });
+        
+        // Debug-Output in Konsole
+        console.log('Download tracked:', fileName);
       });
     }
-
-    // Event-Listener für alle 3 Buttons
-    trackDownload('btn-map', 'Lummerland Map Release v1');
-    trackDownload('btn-modpack', 'Lummerland Modpack 1.0.0');
-    trackDownload('btn-emma', 'emma_lummerland.nbt');
+    
+    // Event-Listener für alle 3 Buttons mit korrekten Dateinamen und Typen
+    trackDownload('btn-map', 'Lummerland Map Release v.1.zip', 'zip');
+    trackDownload('btn-modpack', 'Lummerland Modpack 1.0.0.mrpack', 'mrpack');
+    trackDownload('btn-emma', 'emma_lummerland.nbt', 'nbt');
+    
+    // Zusätzliches Page View Tracking
+    gtag('event', 'page_view', {
+      'page_title': 'Lummerland Downloads',
+      'page_location': window.location.href
+    });
   </script>
 </body>
 </html>
