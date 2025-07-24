@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lummerland Downloads - Brawl Launch Channel</title>
   
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5L5FVZ9W');</script>
+  <!-- End Google Tag Manager -->
+  
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CJRCFBT5WH"></script>
   <script>
@@ -657,6 +665,11 @@
   </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5L5FVZ9W"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <div class="particles" id="particles"></div>
   
   <div class="container">
@@ -790,14 +803,28 @@
   </div>
 
   <script>
-    // Google Analytics Download Tracking mit mehr Details
+    // Enhanced Download Tracking für GTM und GA4
     function trackDownload(filename, filetype) {
+      // GTM DataLayer Push (primär für GTM)
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'file_download',
+        file_name: filename,
+        file_extension: filetype,
+        file_category: getFileCategory(filename),
+        download_type: 'direct_download',
+        event_category: 'Downloads',
+        event_label: filename + filetype
+      });
+
+      // GA4 Event (falls auch direkt über gtag getrackt werden soll)
       if (typeof gtag !== 'undefined') {
         gtag('event', 'file_download', {
           'event_category': 'Downloads',
           'event_label': filename,
           'file_name': filename,
           'file_extension': filetype,
+          'file_category': getFileCategory(filename),
           'value': 1
         });
         
@@ -812,12 +839,80 @@
       }
     }
 
-    // Google Analytics Social Media Tracking
+    // Hilfsfunktion zur Kategorisierung der Dateien
+    function getFileCategory(filename) {
+      if (filename.includes('Map')) return 'minecraft_map';
+      if (filename.includes('Modpack')) return 'modpack';
+      if (filename.includes('Emma')) return 'nbt_file';
+      return 'other';
+    }
+
+    // Enhanced Social Media Tracking für GTM und GA4
     function trackSocial(platform) {
+      // GTM DataLayer Push
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'social_click',
+        social_platform: platform,
+        social_action: 'click',
+        event_category: 'Social Media',
+        event_label: platform
+      });
+
+      // GA4 Event (falls auch direkt über gtag getrackt werden soll)
       if (typeof gtag !== 'undefined') {
         gtag('event', 'social_click', {
           'event_category': 'Social Media',
           'event_label': platform,
+          'social_platform': platform,
+          'value': 1
+        });
+      }
+      
+      console.log('Social Media Click getrackt:', platform);
+    }
+
+    // Enhanced Gallery Tracking
+    function trackGalleryEvent(action, label) {
+      // GTM DataLayer Push
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'gallery_interaction',
+        gallery_action: action,
+        gallery_label: label,
+        event_category: 'Gallery',
+        event_label: label
+      });
+
+      // GA4 Event
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'gallery_interaction', {
+          'event_category': 'Gallery',
+          'event_label': label,
+          'gallery_action': action,
+          'value': 1
+        });
+      }
+    }
+
+    // Enhanced Modal Tracking
+    function trackModalEvent(action, imageTitle) {
+      // GTM DataLayer Push
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'modal_interaction',
+        modal_action: action,
+        modal_content: imageTitle,
+        event_category: 'Modal',
+        event_label: imageTitle
+      });
+
+      // GA4 Event
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'modal_interaction', {
+          'event_category': 'Modal',
+          'event_label': imageTitle,
+          'modal_action': action,
           'value': 1
         });
       }
@@ -881,19 +976,17 @@
       document.body.style.overflow = 'hidden';
       
       // Track modal open
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'image_modal_open', {
-          'event_category': 'Gallery',
-          'event_label': imageData.title,
-          'value': 1
-        });
-      }
+      trackModalEvent('open', imageData.title);
     }
 
     function closeModal() {
       const modal = document.getElementById('imageModal');
+      const modalTitle = document.getElementById('modalTitle').textContent;
       modal.classList.remove('active');
       document.body.style.overflow = 'auto';
+      
+      // Track modal close
+      trackModalEvent('close', modalTitle);
     }
 
     // Close modal on background click
@@ -906,7 +999,10 @@
     // Close modal on ESC key
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
-        closeModal();
+        const modal = document.getElementById('imageModal');
+        if (modal.classList.contains('active')) {
+          closeModal();
+        }
       }
     });
 
@@ -951,35 +1047,29 @@
       showSlide(slideIndex);
     }
 
-    // Event listeners with Google Analytics tracking
+    // Event listeners with enhanced tracking
     prev.addEventListener("click", () => {
       changeSlide(-1);
-      // Track gallery navigation
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'gallery_navigation', {
-          'event_category': 'Gallery',
-          'event_label': 'Previous'
-        });
-      }
+      trackGalleryEvent('navigation', 'Previous');
     });
     
     next.addEventListener("click", () => {
       changeSlide(1);
-      // Track gallery navigation
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'gallery_navigation', {
-          'event_category': 'Gallery',
-          'event_label': 'Next'
-        });
-      }
+      trackGalleryEvent('navigation', 'Next');
     });
 
     indicators.forEach((indicator, index) => {
-      indicator.addEventListener("click", () => goToSlide(index));
+      indicator.addEventListener("click", () => {
+        goToSlide(index);
+        trackGalleryEvent('indicator_click', `Slide_${index + 1}`);
+      });
     });
 
     // Auto-slide functionality
-    let autoSlideInterval = setInterval(() => changeSlide(1), 5000);
+    let autoSlideInterval = setInterval(() => {
+      changeSlide(1);
+      trackGalleryEvent('auto_slide', `Slide_${slideIndex + 1}`);
+    }, 5000);
 
     // Pause auto-slide on hover
     const galleryContainer = document.querySelector('.gallery-container');
@@ -988,13 +1078,22 @@
     });
 
     galleryContainer.addEventListener('mouseleave', () => {
-      autoSlideInterval = setInterval(() => changeSlide(1), 5000);
+      autoSlideInterval = setInterval(() => {
+        changeSlide(1);
+        trackGalleryEvent('auto_slide', `Slide_${slideIndex + 1}`);
+      }, 5000);
     });
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') changeSlide(-1);
-      if (e.key === 'ArrowRight') changeSlide(1);
+      if (e.key === 'ArrowLeft') {
+        changeSlide(-1);
+        trackGalleryEvent('keyboard_navigation', 'Left_Arrow');
+      }
+      if (e.key === 'ArrowRight') {
+        changeSlide(1);
+        trackGalleryEvent('keyboard_navigation', 'Right_Arrow');
+      }
     });
 
     // Touch/swipe support for mobile
@@ -1012,15 +1111,68 @@
       if (Math.abs(diff) > 50) { // Minimum swipe distance
         if (diff > 0) {
           changeSlide(1); // Swipe left - next slide
+          trackGalleryEvent('swipe', 'Left');
         } else {
           changeSlide(-1); // Swipe right - previous slide
+          trackGalleryEvent('swipe', 'Right');
         }
       }
+    });
+
+    // Page Load Tracking
+    window.addEventListener('load', function() {
+      // GTM DataLayer Push für Page Load
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'page_loaded',
+        page_title: document.title,
+        page_url: window.location.href
+      });
+      
+      console.log('Seite vollständig geladen - GTM Event gesendet');
+    });
+
+    // Scroll Tracking (optional)
+    let scrollTracked = {
+      25: false,
+      50: false,
+      75: false,
+      100: false
+    };
+
+    window.addEventListener('scroll', function() {
+      const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+      
+      Object.keys(scrollTracked).forEach(percent => {
+        if (scrollPercent >= percent && !scrollTracked[percent]) {
+          scrollTracked[percent] = true;
+          
+          // GTM DataLayer Push für Scroll Events
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'scroll_milestone',
+            scroll_percent: percent,
+            event_category: 'Engagement',
+            event_label: `${percent}% scrolled`
+          });
+        }
+      });
     });
 
     // Initialize
     showSlide(slideIndex);
     createParticles();
+
+    // GTM Ready Event
+    window.addEventListener('DOMContentLoaded', function() {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'gtm_ready',
+        page_type: 'download_page',
+        content_group1: 'Lummerland',
+        content_group2: 'Downloads'
+      });
+    });
   </script>
 </body>
 </html>
