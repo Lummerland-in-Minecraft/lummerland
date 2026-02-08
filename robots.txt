@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Link zu deiner Sitemap (Wichtig für Google!)
+Sitemap: https://makomoddev.github.io/mako-mermaids-mod-official/sitemap.xml
